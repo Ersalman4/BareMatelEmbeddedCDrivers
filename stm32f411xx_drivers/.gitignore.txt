@@ -1,0 +1,11 @@
+# STM32CubeIDE
+.cproject
+.project
+.settings/
+Debug/
+Release/
+*.o
+*.d
+*.elf
+*.bin
+*.hex

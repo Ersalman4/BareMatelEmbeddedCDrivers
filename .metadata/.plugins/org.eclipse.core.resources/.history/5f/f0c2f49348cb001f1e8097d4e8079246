@@ -1,0 +1,299 @@
+/*
+ * stm32411xx_usart_driver.c
+ *
+ *  Created on: Jan 5, 2025
+ *      Author: hp
+ */
+
+#include "stm32f411xx_usart_driver.h"
+
+/************************************************************************************************
+ * @fn						-> USART_PeriClkControl
+ *
+ * @Brief					-> This function is use to control USART peripheral clock
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				-> command to enable or disable
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_PeriClkControl(USART_RegDef_t *pUSARTx, uint8_t EnorDi){
+	if(EnorDi == ENABLE){
+		if(pUSARTx == USART1){
+			//call macro to enable usart1 clock
+			USART1_PCLK_EN();
+		}else if(pUSARTx == USART2){
+			USART2_PCLK_EN();
+		}else if(pUSARTx == USART3){
+			USART3_PCLK_EN();
+		}else if(pUSARTx == UART4){
+			UART4_PCLK_EN();
+		}else if(pUSARTx == UART5){
+			UART5_PCLK_EN();
+		}else if(pUSARTx == USART6){
+			USART6_PCLK_EN();
+		}
+	}else{
+		if(pUSARTx == USART1){
+			USART1_PCLK_DI();
+		}else if(pUSARTx == USART2){
+			USART2_PCLK_DI();
+		}else if(pUSARTx == USART3){
+			USART3_PCLK_DI();
+		}else if(pUSARTx == UART4){
+			UART4_PCLK_DI();
+		}else if(pUSARTx == UART5){
+			UART5_PCLK_DI();
+		}else if(pUSARTx == USART6){
+			USART6_PCLK_DI();
+		}
+	}
+}
+
+/************************************************************************************************
+ * @fn						-> USART_Int
+ *
+ * @Brief					-> This function is use to initialize USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_Init(USART_Handle_t *pUSARTHandle){
+
+}
+
+/************************************************************************************************
+ * @fn						-> USART_DeInt
+ *
+ * @Brief					-> This function is use to Deinitialize USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_DeInit(USART_RegDef_t *pUSARTx){
+
+	if(pUSARTx == USART1){
+		USART1_REG_RESET();
+	}else if(pUSARTx == USART2){
+		USART2_REG_RESET();
+	}else if(pUSARTx == USART3){
+		USART3_REG_RESET();
+	}else if(pUSARTx == UART4){
+		UART4_REG_RESET();
+	}else if(pUSARTx == UART5){
+		UART5_REG_RESET();
+	}else if(pUSARTx == USART6){
+		USART6_REG_RESET();
+	}
+}
+/************************************************************************************************
+ * @fn						-> USART_PeripheralControl
+ *
+ * @Brief					-> This function is use to enable or disable the usart peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_PeripheralControl(USART_RegDef_t *pUSARTx, uint8_t EnorDi){
+	if(EnorDi == ENABLE){
+		pUSARTx->CR1 |= (1 << USART_CR1_UE);
+	}else{
+		pUSARTx->CR1 &= ~(1 << USART_CR1_UE);
+	}
+}
+
+/************************************************************************************************
+ * @fn						-> USART_GetFlagStatus
+ *
+ * @Brief					-> This function is use to check status of various flags of usart
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				-> flag name
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+uint8_t USART_GetFlagStatus(USART_RegDef_t *pUSARTx, uint8_t FlagName){
+
+	if(pUSARTx->SR & FlagName){
+		return FLAG_SET;
+	}
+	return FLAG_RESET;
+}
+
+/************************************************************************************************
+ * @fn						-> USART_SendData
+ *
+ * @Brief					-> This function is use to send the data from USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_SendData(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Len){
+
+}
+
+/************************************************************************************************
+ * @fn						-> USART_ReceiveData
+ *
+ * @Brief					-> This function is use to send the data from USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_ReceiveData(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_t Len){
+
+}
+
+
+/************************************************************************************************
+ * @fn						-> USART_SendDataIT
+ *
+ * @Brief					-> This function is use to send the data from USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_SendDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Len){
+
+}
+
+
+/************************************************************************************************
+ * @fn						-> USART_ReceiveDataIT
+ *
+ * @Brief					-> This function is use to send the data from USART peripheral
+ *
+ * @param[in]				-> base address of the USART peripheral
+ * @param[in]				->
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_ReceiveDataIT(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_t Len){
+
+}
+
+
+/************************************************************************************************
+ * @fn						-> USART_IRQInterruptConfig
+ *
+ * @Brief					-> This function is use to configure the interrupt for USART peripheral
+ *
+ * @param[in]				-> irq number
+ * @param[in]				-> command to enable or disable
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+
+void USART_IRQInterruptConfig(uint8_t IRQ_Number, uint8_t EnorDi){
+	//checks if the command is enable
+	if(EnorDi == ENABLE){
+		//check again for irq number for which intrrupt needs to be configured
+		if(IRQ_Number <= 31){
+			//set the ISER0 register
+			*NVIC_ISER0 |= (1 << IRQ_Number);
+		}else if(IRQ_Number > 31 && IRQ_Number < 64){
+			//set the ISER1 register
+			*NVIC_ISER1 |= (1 << (IRQ_Number % 32));
+		}else if(IRQ_Number > 64 && IRQ_Number < 96){
+			//set the ISER2 register
+			*NVIC_ISER2 |= (1 << (IRQ_Number % 64));
+		}
+	}else{
+		if(IRQ_Number <= 31){
+			//clear the ICER0 register
+			*NVIC_ICER0 |= (1 << IRQ_Number);
+		}else if(IRQ_Number > 31 && IRQ_Number < 64){
+			//clears the ICER1 register
+			*NVIC_ICER1 |= (1 << (IRQ_Number % 32));
+		}else if(IRQ_Number > 64 && IRQ_Number < 96){
+			//clears the ICER2 register
+			*NVIC_ICER2 |= (1 << (IRQ_Number % 64));
+		}
+	}
+}
+
+/************************************************************************************************
+ * @fn						-> USART_IRQPriorityConfig
+ *
+ * @Brief					-> This function is use to configure the interrupt priorityfor USART
+ * 								peripheral
+ *
+ * @param[in]				-> irq number
+ * @param[in]				-> irq priority
+ * @param[in]				->
+ *
+ * @return					-> void
+ *
+ * @Note					->
+ *
+ */
+void USART_IRQPriorityConfig(uint8_t IRQ_Number, uint32_t IRQ_Priority){
+	//1 first lets find out the priority register for this
+	uint8_t iprx = IRQ_Number/4;
+	uint8_t iprx_section = IRQ_Number % 4;
+	uint8_t shift_amount = ((8 * iprx_section) + (8 - NO_OF_PR_BITS_IMPLEMENTED));
+
+	//add this iprx value to pr base addr to get correct register
+	*(NVIC_PR_BASE_ADDR + iprx) |= (IRQ_Priority << shift_amount);
+}
